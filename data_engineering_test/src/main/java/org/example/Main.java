@@ -23,49 +23,10 @@ public class Main {
         if (!Files.exists(destination)) {
             downloadingFile(destination);
         }
+        ///function to the logs.json file
         readingFile();
 
-        ///parsing json
-//        String json = "{\"name\":\"fatima\",\"age\":25}";
-//        try {
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            person personn = objectMapper.readValue(json, person.class);
-//            System.out.println("Name:" + personn.getName());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
-//        String filePath = "src/main/resources/logs.json";
-//
-//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-//            String line;
-//            ObjectMapper objectMapper = new ObjectMapper();
-//
-//            // List to store severity values
-//            List<String> severities = new ArrayList<>();
-//
-//            // Read each line from the file
-//            while ((line = br.readLine()) != null) {
-//                // Parse each line as a JSON object
-//                JsonNode log = objectMapper.readTree(line);
-//
-//
-//                // Navigate to the "jsonPayload" field, which contains another JSON object
-//                JsonNode jsonPayload = log.get("httpRequest");
-//
-//                // Extract "severity" from the nested JSON object
-//                if (jsonPayload != null && jsonPayload.has("remoteIp")) {
-//                    String severity = jsonPayload.get("remoteIp").asText();
-//                    severities.add(severity);
-//                }
-//                ;
-//            }
-//
-//            // Print or further process the stored severities
-//            System.out.println("Severities: " + severities);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
     }
 }

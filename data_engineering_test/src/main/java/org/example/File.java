@@ -4,9 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.nio.Buffer;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -33,8 +33,10 @@ public class File {
             String line;
             ObjectMapper objectMapper = new ObjectMapper();
 
-            ///lists to store the needed attributes
-            List<String> requestURLs = new ArrayList<>();
+            ///lists to store the needed attributes apd/pid
+            List<String> apds = new ArrayList<>();
+            List<String> pids = new ArrayList<>();
+
             //read each line from the file
             while ((line = br.readLine()) != null) {
                 ///parse each line as a JSON object
@@ -44,15 +46,52 @@ public class File {
                 ///extract requestURL
                 if (httpRequest != null && httpRequest.has("requestUrl")) {
                     String requestURL = httpRequest.get("requestUrl").asText();
-                    requestURLs.add(requestURL);
+
+                    ///extract pid and apd from the requestUrl
+                    ///replace or remove illegal characters in the query
+                    String santizedUrl = sanitizeURL(requestURL);
+                    URL uri = new URL(santizedUrl);
+                    //extract the query parameters
+                    String query = uri.getQuery();
+
+                    //extract apd and save it to the apds list
+                    String apd = extractParameter(query, "apd");
+                    apds.add(apd);
+
+                    //extract pid and save it to the pids list
+                    String pid = extractParameter(query, "pid");
+                    pids.add(pid);
                 }
-                ///show the results
-                System.out.println("Request URL: " + requestURLs);
+                ///extract remoteIp and request time from the httpRequest
+                if (httpRequest != null && httpRequest.has("remoteIp") && httpRequest.has("latency")) {
+                    Double requestTime = httpRequest.get("latency").asDouble();
+                    String remoteIp = httpRequest.get("remoteIp").asText();
+                }
 
             }
+            System.out.println(apds);
+            System.out.println(pids);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+
+    private static String extractParameter(String query, String parameterName) {
+        String[] parameters = query.split("&");
+        for (String parameter : parameters) {
+            String[] keyValue = parameter.split("=");
+            if (keyValue.length == 2 && keyValue[0].equals(parameterName)) {
+                return keyValue[1];
+            }
+        }
+        return null;
+    }
+
+    private static String sanitizeURL(String url) {
+        // Replace or remove illegal characters in the query
+        return url.replaceAll("[|]", ""); // Add more characters if needed
+    }
+
+
 }
