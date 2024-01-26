@@ -19,6 +19,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.example.Request.addRequests;
+
+
 public class FileController {
 
     public static void downloadingFile(Path destination) {
@@ -35,6 +38,7 @@ public class FileController {
     }
 
     public static void readingFile() throws FileNotFoundException {
+        List<Request> requests = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new BufferedReader(new FileReader("src/main/resources/logs.json")))) {
             String line;
             ObjectMapper objectMapper = new ObjectMapper();
@@ -47,14 +51,18 @@ public class FileController {
                 JsonNode httpRequest = log.get("httpRequest");
                 //get the timestamp
                 String timestamp = log.get("timestamp").asText();
-                System.out.println("Parsed Date: " + getDate(timestamp));
+//                System.out.println("Parsed Date: " + getDate(timestamp));
+                String remoteIp = null;
+                Double requestTime = null;
+                String apd = null;
+                String pid = null;
                 if (httpRequest != null) {
                     ///extract remoteIp and request time from the httpRequest
                     if (httpRequest.has("remoteIp") && httpRequest.has("latency")) {
-                        Double requestTime = httpRequest.get("latency").asDouble();
-                        String remoteIp = httpRequest.get("remoteIp").asText();
-                        System.out.println("country_name: " + getCountryNameByIP(remoteIp));
-                        System.out.println("request_time: " + requestTime);
+                        requestTime = httpRequest.get("latency").asDouble();
+                        remoteIp = httpRequest.get("remoteIp").asText();
+//                        System.out.println("country_name: " + getCountryNameByIP(remoteIp));
+//                        System.out.println("request_time: " + requestTime);
                     }
 
                     ///extract requestURL
@@ -67,14 +75,20 @@ public class FileController {
                         //extract the query parameters
                         String query = uri.getQuery();
                         //extract apd and save it to the apds list
-                        String apd = extractParameter(query, "apd");
+                        apd = extractParameter(query, "apd");
                         //extract pid and save it to the pids list
-                        String pid = extractParameter(query, "pid");
-                        System.out.println("apd: " + apd);
-                        System.out.println("pid: " + pid);
+                        pid = extractParameter(query, "pid");
+//                        System.out.println("apd: " + apd);
+//                        System.out.println("pid: " + pid);
                     }
                 }
+                Request request = new Request(getCountryNameByIP(remoteIp), requestTime, getDate(timestamp), apd, pid);
+                requests.add(request);
+//                request.addRequest();
             }
+            addRequests(requests);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

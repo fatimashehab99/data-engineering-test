@@ -12,6 +12,11 @@ public class DatabaseConnection {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
 
+    public static Connection getConnection() throws SQLException {
+        Connection connection = DriverManager.getConnection(Connector_URL, USERNAME, PASSWORD);
+        return connection;
+    }
+
     private void testConnection() {
         try (Connection connection = DriverManager.getConnection(Connector_URL, USERNAME, PASSWORD)) {
             System.out.println("Connection successful");
@@ -19,8 +24,6 @@ public class DatabaseConnection {
             System.err.println("Connection failed. Error message:  " + e.getMessage());
         }
     }
-
-
 
 
 }

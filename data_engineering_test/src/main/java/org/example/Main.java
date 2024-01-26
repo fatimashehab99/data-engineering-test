@@ -18,7 +18,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.example.DatabaseConnection.insertRecord;
 import static org.example.FileController.*;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -26,14 +25,14 @@ import static org.example.FileController.*;
 public class Main {
     public static void main(String[] args) throws IOException, GeoIp2Exception, SQLException {
 
-//        //downloading the logs.json file if not exists
-//        Path destination = Path.of("src/main/resources/logs.json");
-//        if (!Files.exists(destination)) {
-//            downloadingFile(destination);
-//        }
-//
-//        ///reading logs.json file and extract the needed attributes
-//        readingFile();
+        //downloading the logs.json file if not exists
+        Path destination = Path.of("src/main/resources/logs.json");
+        if (!Files.exists(destination)) {
+            downloadingFile(destination);
+        }
+
+        ///reading logs.json file and extract the needed attributes
+        readingFile();
 
     }
 }
