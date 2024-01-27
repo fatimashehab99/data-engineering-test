@@ -37,64 +37,6 @@ public class FileController {
         }
     }
 
-//    public static void readingFile() throws FileNotFoundException {
-//        List<Request> requests = new ArrayList<>();
-//        try (BufferedReader br = new BufferedReader(new BufferedReader(new FileReader("src/main/resources/logs.json")))) {
-//            String line;
-//            ObjectMapper objectMapper = new ObjectMapper();
-//
-//            //read each line from the file
-//            while ((line = br.readLine()) != null) {
-//                ///parse each line as a JSON object
-//                JsonNode log = objectMapper.readTree(line);
-//                //get the httpRequest JSON
-//                JsonNode httpRequest = log.get("httpRequest");
-//                //get the timestamp
-//                String timestamp = log.get("timestamp").asText();
-////                System.out.println("Parsed Date: " + getDate(timestamp));
-//                String remoteIp = null;
-//                Double requestTime = null;
-//                String apd = null;
-//                String pid = null;
-//                if (httpRequest != null) {
-//                    ///extract remoteIp and request time from the httpRequest
-//                    if (httpRequest.has("remoteIp") && httpRequest.has("latency")) {
-//                        requestTime = httpRequest.get("latency").asDouble();
-//                        remoteIp = httpRequest.get("remoteIp").asText();
-////                        System.out.println("country_name: " + getCountryNameByIP(remoteIp));
-////                        System.out.println("request_time: " + requestTime);
-//                    }
-//
-//                    ///extract requestURL
-//                    if (httpRequest.has("requestUrl")) {
-//                        String requestURL = httpRequest.get("requestUrl").asText();
-//                        ///extract pid and apd from the requestUrl
-//                        ///replace or remove illegal characters in the query
-//                        String santizedUrl = sanitizeURL(requestURL);
-//                        URL uri = new URL(santizedUrl);
-//                        //extract the query parameters
-//                        String query = uri.getQuery();
-//                        //extract apd and save it to the apds list
-//                        apd = extractParameter(query, "apd");
-//                        //extract pid and save it to the pids list
-//                        pid = extractParameter(query, "pid");
-////                        System.out.println("apd: " + apd);
-////                        System.out.println("pid: " + pid);
-//                    }
-//                }
-//                Request request = new Request(getCountryNameByIP(remoteIp), requestTime, getDate(timestamp), apd, pid);
-//                requests.add(request);
-////                request.addRequest();
-//            }
-//            addRequests(requests);
-//
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-
     static String extractParameter(String query, String parameterName) {
         String[] parameters = query.split("&");
         for (String parameter : parameters) {
