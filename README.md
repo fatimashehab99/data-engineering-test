@@ -1,34 +1,62 @@
-# data-engineering-test
-1-Downloading JSON logs file
-![Alt text](image.png)
-If the file does not exist to the path I specified , it will create a new json file using the downloadFile() function 
-![Alt text](image-1.png)
-THe downloadFile() function save the logs.json file by opening a connection to the data URL using openStream() then returning an inputStream for reading the data that will be saved in the logs.json file by using the Files.copy() function
+# Data Engineering Test
 
-2-Parsing the logs JSON 
-![Alt text](image-2.png)
-Reading JSON lines by looping over every line to be able to save the content of every JSON line to a JSON NODE object to extract the needed data. Object mapper helps me in that where I get it from jackson dependency that I add it to the pom.xml file .
-![Alt text](image-3.png)
+## 1. Downloading JSON Logs File
+- **Description:** Downloads a JSON logs file from a specified path or creates a new one if it doesn't exist.
+- **Functionality:**
+  - Utilizes the `downloadFile()` function to establish a connection to the data URL and save the logs.json file.
+  - Uses `Files.copy()` to save the data from the input stream into the logs.json file.
 
-3-Getting request , countryname 
-![Alt text](image-4.png)
-First I get the timestamp since I want to extract the date later and the httpRequest JSON that contains the request time which is latency , remoteIp and request URL that I will extract the pid and website domain from it. 
-![Alt text](image-5.png)
-The getCountryNameByIp() function returns the country name for each ip by using the GeoLite database and the maxMind dependency that I add in the pom.xml file
-![Alt text](image-6.png)
+![Downloading JSON logs file](image.png)
 
-4-Getting date from timestamp 
-![Alt text](image-7.png)
-I created a function getDate that parse the timestamp to LocalDateTime object to be able to get the date from it
+## 2. Parsing the Logs JSON
+- **Description:** Parses the JSON logs file to extract necessary data using Jackson's Object Mapper.
+- **Functionality:**
+  - Iterates over each line of the JSON file to extract data into JSON Node objects.
+  - Utilizes the Object Mapper from the Jackson dependency in the pom.xml file for parsing.
 
-5-Getting website domain and pid
-![Alt text](image-8.png)
-I extract first the requestURL attribute from the httpRequest JSON . Then I created a function named extract Parameter that allows me to get the website domain and post id from the URL 
+![Parsing the logs JSON](image-2.png)
 
-6-Inserting data to the database
-  a-I first created the DatabaseConnection class where I created the connection to the MySql database 
-  ![Alt text](image-9.png)
-  b-I created Request class which is the table needed in the database , the fields in the Request class are the columns for the requests table in the database
-  ![Alt text](image-10.png) 
-  c-I created a function named addRequests() that takes a list of Request object , add it to a batch then add the data to the database . I use batch since it is a better way to insert data while dealing with huge amount of data.
+## 3. Getting Request and Country Name
+- **Description:** Extracts request details and country names from JSON logs using MaxMind's GeoLite database.
+- **Functionality:**
+  - Extracts timestamp and httpRequest JSON for request details.
+  - Utilizes `getCountryNameByIp()` function to retrieve country names from IPs using MaxMind's GeoLite database.
+
+![Getting request, country name](image-4.png)
+
+## 4. Getting Date from Timestamp
+- **Description:** Parses timestamp to extract date using LocalDateTime object.
+- **Functionality:**
+  - Implements `getDate()` function to convert timestamp to LocalDateTime object for date extraction.
+
+![Getting date from timestamp](image-7.png)
+
+## 5. Getting Website Domain and PID
+- **Description:** Extracts website domain and post ID from request URL.
+- **Functionality:**
+  - Extracts requestURL attribute from httpRequest JSON.
+  - Utilizes `extractParameter()` function to retrieve website domain and post ID from the URL.
+
+![Getting website domain and PID](image-8.png)
+
+## 6. Inserting Data to the Database
+- **Description:** Inserts extracted data into a MySQL database table.
+- **Functionality:**
+  - Establishes connection to MySQL database using `DatabaseConnection` class.
+  - Defines `Request` class representing the table structure in the database.
+  - Implements `addRequests()` function to efficiently insert data using batch processing.
+
+### a. Database Connection
+- Establishes connection to MySQL database.
+
+![Database Connection](image-9.png)
+
+### b. Request Class
+- Defines table structure for the requests table in the database.
+
+![Request Class](image-10.png)
+
+### c. Inserting Data
+- Inserts data into the database using batch processing for improved performance.
+- ![image](https://github.com/fatimashehab99/data-engineering-test/assets/107859028/0c5b4b44-7011-4a55-9a26-66e9ccb9051f)
 
