@@ -1,0 +1,39 @@
+///Creating requests table 
+
+CREATE TABLE Requests (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    request_time DECIMAL(10, 6),
+    request_date DATE,
+    website_domain VARCHAR(100),
+    post_id VARCHAR(100)
+);
+
+///Creates a view to count the occurrences of website domains in the Requests table.
+
+CREATE VIEW top_domains_count AS
+SELECT COUNT(website_domain) AS website_domain_count,
+       website_domain
+FROM requests
+GROUP BY website_domain
+ORDER BY website_domain_count DESC;
+
+
+///Creates a view to count the occurrences of country names in the Requests table.
+
+CREATE VIEW top_countries_count AS
+SELECT COUNT(country_name) AS country_name_count,
+       country_name
+FROM requests
+GROUP BY country_name
+ORDER BY country_name_count DESC;
+
+
+//Creates a view to count the occurrences of post IDs in the Requests table, sorted by request date.
+
+CREATE VIEW top_pid_count AS
+SELECT COUNT(*) AS post_id_count,
+       post_id,
+       request_date
+FROM requests
+GROUP BY post_id
+ORDER BY request_date DESC;
