@@ -29,7 +29,7 @@ public class Main {
         //downloading the logs.json file if not exists
         Path destination = Path.of("src/main/resources/logs.json");
         if (!Files.exists(destination)) {
-            downloadingFile(destination);
+            downloadFile(destination);
         }
         ///initializing request arrayList for saving the extracted data
         List<Request> requests = new ArrayList<>();

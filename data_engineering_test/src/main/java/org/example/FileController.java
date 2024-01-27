@@ -24,7 +24,7 @@ import static org.example.Request.addRequests;
 
 public class FileController {
 
-    public static void downloadingFile(Path destination) {
+    public static void downloadFile(Path destination) {
         //Downloading the JSON logs link
         try {
             URL url = new URL("https://static.cognativex.com/test/logs.json");
