@@ -59,4 +59,21 @@
 ### c. Inserting Data
 - Inserts data into the database using batch processing for improved performance.
 - ![image](https://github.com/fatimashehab99/data-engineering-test/assets/107859028/0c5b4b44-7011-4a55-9a26-66e9ccb9051f)
+## 7. Visualizating data using PowerBi
+The following diagrams shows the charts of the SQL views
+
+![image](https://github.com/fatimashehab99/data-engineering-test/assets/107859028/691e7384-052c-416f-92af-b550fb7b5f1c)
+
+This chart shows the top countries count
+
+![image](https://github.com/fatimashehab99/data-engineering-test/assets/107859028/78f4b858-f508-409a-bb8c-c730587855d8)
+
+This chart shows the top domains count
+
+![image](https://github.com/fatimashehab99/data-engineering-test/assets/107859028/b1d7ca27-ed5a-4460-8adc-dfe0a73cfa2e)
+
+This chart shows the top pid with respect to date but here I have only one date so because of that it appears in this way
+
+
+
 
